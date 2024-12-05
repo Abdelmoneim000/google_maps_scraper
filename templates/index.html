@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <title>ZIP Code Scraper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 1rem 0 0.5rem;
+            text-align: left;
+            color: #555;
+        }
+        input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 0.25rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter ZIP Code to Scrape Locations</h1>
+        <form action="{{ url_for('scrape') }}" method="post">
+            <label for="zip_code">ZIP Code:</label>
+            <input type="text" id="zip_code" name="zip_code" required>
+
+            <label for="session_id">Session ID:</label>
+            <input type="text" id="session_id" name="session_id" required>
+
+            <input type="submit" value="Start Scraping">
+        </form>
+    </div>
+</body>
+</html>

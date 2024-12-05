@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+    <title>Scraping Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        #logs {
+            margin-top: 1rem;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 1rem;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        p {
+            margin: 0.5rem 0;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Scraping Status for Session: {{ session_id }}</h1>
+        <div id="logs"></div>
+    </div>
+
+    <script>
+        var socket = io.connect(location.origin);
+        socket.on('connect', function() {
+            socket.emit('join', {'session_id': '{{ session_id }}'});
+        });
+        
+        socket.on('log', function(msg) {
+            var logs = document.getElementById('logs');
+            logs.innerHTML += '<p>' + msg.data + '</p>';
+            logs.scrollTop = logs.scrollHeight;
+        });
+
+        socket.on('scrape_complete', function(msg) {
+            window.location.href = '/result/{{ session_id }}';
+        });
+    </script>
+</body>
+</html>
