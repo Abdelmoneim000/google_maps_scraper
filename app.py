@@ -95,8 +95,10 @@ def scrape_google_maps(zip_code, session_id):
     time.sleep(3)
 
     if driver.current_url != "https://www.google.com/maps":
-        driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[3]/div[1]/div[1]/form[1]/div/div/button/span').click()
-    
+        try:
+            driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[3]/div[1]/div[1]/form[1]/div/div/button/span').click()
+        except:
+            pass
     socketio.emit('log', {'data': f"Started scraping for ZIP Code: {zip_code}"}, to=session_id)
 
     search_box = driver.find_element(By.ID, "searchboxinput")
